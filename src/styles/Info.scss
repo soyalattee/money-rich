@@ -1,0 +1,21 @@
+.info {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid $color-light-gray;
+  padding: 4px 0px;
+  margin-bottom: 10px;
+  img {
+    width: 32px;
+    height: 32px;
+    border-radius: 40px;
+    margin: 4px 9px;
+  }
+  p {
+    display: inline-block;
+    margin-left: 2px;
+    color: $color-purple;
+    font-weight: 600;
+  }
+}

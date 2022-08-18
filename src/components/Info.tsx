@@ -9,5 +9,10 @@ interface Props {
 }
 
 export function Info({ name, imgUrl }: Props) {
-  return <div className="info">{name}</div>;
+  return (
+    <div className="info">
+      <img src={imgUrl} alt="profile" />
+      <p>{name}</p>
+    </div>
+  );
 }

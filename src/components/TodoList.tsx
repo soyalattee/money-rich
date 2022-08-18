@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { ITodo } from "../App";
+import { ITodo } from "../hooks/useData";
 
 export type TTab = "MINE" | "CHILD";
 

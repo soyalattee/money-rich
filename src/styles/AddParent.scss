@@ -1,0 +1,60 @@
+.add-parent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px 40px;
+  p {
+    text-align: center;
+    color: $color-gray;
+    font-size: 21px;
+    margin-bottom: 11px;
+  }
+  button {
+    margin: 4px 0;
+    border: none;
+    height: 50px;
+    width: 100%;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 1;
+    color: #ffffff;
+    background-color: $color-purple;
+    border-radius: 40px;
+  }
+}
+
+.input-box {
+  box-sizing: border-box;
+  position: relative;
+  margin: 9px 0px;
+  background-color: #ffffff;
+  padding: 6.5px 12px;
+  border: 0.5px solid $color-border-gray;
+  border-radius: 10px;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  input {
+    border: none;
+    text-align: end;
+    width: 100%;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: $color-font-dark;
+    font-size: 18px;
+    margin-right: 8px;
+  }
+}
+
+.no-child {
+  margin: 40px 0px;
+  p {
+    text-align: center;
+    color: $color-gray;
+    font-size: 21px;
+    margin-bottom: 11px;
+  }
+}
