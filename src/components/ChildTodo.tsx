@@ -9,9 +9,10 @@ export type TTab = "MINE" | "CHILD";
 interface Props {
   todos: ITodo[];
   addTodo: (todo: ITodo) => void;
+  doneTodo: (todo: ITodo) => void;
 }
 
-export function ChildTodo({ todos, addTodo }: Props) {
+export function ChildTodo({ todos, addTodo, doneTodo }: Props) {
   const [content, setContent] = useState("");
   const [price, setPrice] = useState("");
   const sendHandler = () => {
@@ -70,9 +71,7 @@ export function ChildTodo({ todos, addTodo }: Props) {
                 key={todo.id}
                 todo={todo}
                 type={"CHILD"}
-                submit={(todo: ITodo) => {
-                  console.log(todo);
-                }}
+                submit={doneTodo}
               />
             );
           })}

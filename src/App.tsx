@@ -81,9 +81,31 @@ function App() {
 
   const finishTodo = (todo: ITodo) => {
     // 해당 todo 값의 state를 finish로 바꿉니다.
+    if (todo.state !== "TODO") return;
     const updatedTodo: ITodo = { ...todo, state: "FINISH" };
     const updatedTodosList: ITodos[] = todosList.map((todosObj) => {
       if (todosObj.childId === user?.email) {
+        const updatedTodos: ITodo[] = todosObj.todos.map((value) => {
+          if (value.id === todo.id) {
+            return updatedTodo;
+          }
+          return value;
+        });
+
+        return { ...todosObj, todos: updatedTodos };
+      }
+      return todosObj;
+    });
+    console.log(updatedTodosList);
+    // todosList의 해당 todos를 바꿔 업데이트 보냅니다.
+    updateData(undefined, updatedTodosList);
+  };
+  const doneTodo = (todo: ITodo) => {
+    if (todo.state !== "FINISH") return;
+    // 해당 todo 값의 state를 done으로 바꿉니다.
+    const updatedTodo: ITodo = { ...todo, state: "DONE" };
+    const updatedTodosList: ITodos[] = todosList.map((todosObj) => {
+      if (todosObj.parentId === user?.email) {
         const updatedTodos: ITodo[] = todosObj.todos.map((value) => {
           if (value.id === todo.id) {
             return updatedTodo;
@@ -153,7 +175,7 @@ function App() {
         <MineTodo todos={myTodos} finishTodo={finishTodo} />
       )}
       {tabState === "CHILD" && user?.child && (
-        <ChildTodo addTodo={addTodo} todos={childTodos} />
+        <ChildTodo addTodo={addTodo} todos={childTodos} doneTodo={doneTodo} />
       )}
     </div>
   );
