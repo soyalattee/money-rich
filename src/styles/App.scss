@@ -1,0 +1,45 @@
+$color-purple: #5931b5;
+$color-gray: #979797;
+$color-border-gray: #adb1b2;
+$color-light-gray: #f0f0f0;
+$color-red: #ef5060;
+$color-font-dark: #26292a;
+$color-ether-text: #474b73;
+
+.App {
+  margin: 10px 0;
+}
+p {
+  margin: 0px;
+}
+div {
+  box-sizing: border-box;
+}
+.button-container {
+  // display: none;
+  margin-bottom: 40px;
+}
+.warning-text {
+  color: $color-red;
+}
+
+.account {
+  p {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: wrap;
+  }
+}
+.warning {
+  color: $color-red;
+}
+
+button:disabled {
+  color: $color-gray;
+}
+.testButtons {
+  display: none;
+}
+
+@import "Loading.scss";
+@import "Tab.scss";

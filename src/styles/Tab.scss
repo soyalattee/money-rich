@@ -1,0 +1,16 @@
+.tab-mine,
+.tab-child {
+  display: inline-block;
+  // width: 210px;
+  font-size: 14px;
+  font-weight: 700;
+  color: $color-gray;
+  width: 130px;
+  padding: 13px 0;
+  text-align: center;
+  cursor: pointer;
+  &.on {
+    color: $color-purple;
+    border-bottom: 3px solid $color-purple;
+  }
+}
