@@ -6,7 +6,7 @@ import { GoogleOAuth } from "./components/GoogleOAuth";
 import { Info } from "./components/Info";
 import { Tab, TTab } from "./components/Tab";
 import { TodoList } from "./components/TodoList";
-import { ITodo, useData } from "./hooks/useData";
+import { ITodo, ITodos, useData } from "./hooks/useData";
 import "./styles/App.scss";
 import { parseJwt } from "./utils";
 import "react-toastify/dist/ReactToastify.css";
@@ -79,6 +79,26 @@ function App() {
     setChildTodos(todos.todos);
   };
 
+  const finishTodo = (todo: ITodo) => {
+    // 해당 todo 값의 state를 finish로 바꿉니다.
+    const updatedTodo: ITodo = { ...todo, state: "FINISH" };
+    const updatedTodosList: ITodos[] = todosList.map((todosObj) => {
+      if (todosObj.childId === user?.email) {
+        const updatedTodos: ITodo[] = todosObj.todos.map((value) => {
+          if (value.id === todo.id) {
+            return updatedTodo;
+          }
+          return value;
+        });
+
+        return { ...todosObj, todos: updatedTodos };
+      }
+      return todosObj;
+    });
+    console.log(updatedTodosList);
+    // todosList의 해당 todos를 바꿔 업데이트 보냅니다.
+    updateData(undefined, updatedTodosList);
+  };
   //부모자식 맺을때 리스트는 생성됨
   const addTodo = (todo: ITodo) => {
     setChildTodos((currentChildTodos) => [...currentChildTodos, todo]);
@@ -129,7 +149,9 @@ function App() {
           <p>자식이 없어용!</p>
         </div>
       )}
-      {tabState === "MINE" && user?.parent && <MineTodo todos={myTodos} />}
+      {tabState === "MINE" && user?.parent && (
+        <MineTodo todos={myTodos} finishTodo={finishTodo} />
+      )}
       {tabState === "CHILD" && user?.child && (
         <ChildTodo addTodo={addTodo} todos={childTodos} />
       )}

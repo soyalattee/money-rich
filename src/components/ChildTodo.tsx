@@ -8,7 +8,6 @@ export type TTab = "MINE" | "CHILD";
 
 interface Props {
   todos: ITodo[];
-
   addTodo: (todo: ITodo) => void;
 }
 
@@ -71,7 +70,7 @@ export function ChildTodo({ todos, addTodo }: Props) {
                 key={todo.id}
                 todo={todo}
                 type={"CHILD"}
-                onClick={(todo: ITodo) => {
+                submit={(todo: ITodo) => {
                   console.log(todo);
                 }}
               />

@@ -6,12 +6,12 @@ import { TTab } from "./Tab";
 interface Props {
   todo: ITodo;
   type: TTab;
-  onClick: (todo: ITodo) => void;
+  submit: (todo: ITodo) => void;
 }
 
-export function TodoItem({ todo, type, onClick }: Props) {
+export function TodoItem({ todo, type, submit }: Props) {
   return (
-    <div className="todo-item-box" key={todo.id} onClick={() => onClick(todo)}>
+    <div className="todo-item-box" key={todo.id} onClick={() => submit(todo)}>
       <div>
         <p>📌 {todo.content}</p>
         <p>💰 {todo.price}</p>

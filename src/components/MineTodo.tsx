@@ -8,9 +8,10 @@ export type TTab = "MINE" | "CHILD";
 
 interface Props {
   todos: ITodo[];
+  finishTodo: (todo: ITodo) => void;
 }
 
-export function MineTodo({ todos }: Props) {
+export function MineTodo({ todos, finishTodo }: Props) {
   return (
     <div className="mine-todo-container">
       <div className="todo-list">
@@ -21,9 +22,7 @@ export function MineTodo({ todos }: Props) {
                 key={todo.id}
                 todo={todo}
                 type={"MINE"}
-                onClick={(todo: ITodo) => {
-                  console.log(todo);
-                }}
+                submit={finishTodo}
               />
             );
           })}
