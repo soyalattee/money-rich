@@ -3,11 +3,10 @@ import { toast } from "react-toastify";
 
 const USERS_KEY = "USERS";
 const TODOSLIST_KEY = "TODOSLIST";
-export type TTodoState = "TODO" | "IN_PROGRESS" | "FINISH" | "DONE";
+export type TTodoState = "TODO" | "FINISH" | "DONE";
 
 export interface ITodo {
-  id: string;
-  title: string;
+  id: number;
   content: string;
   price: string;
   state: TTodoState;
@@ -60,6 +59,7 @@ export function useData() {
   }
 
   function addParent(updatedUserInfo: IUserInfo) {
+    if (!updatedUserInfo.parent) return;
     setUser(updatedUserInfo);
     const updatedUserInfoList = userList.map((user) => {
       if (user.email === updatedUserInfo.email) {
@@ -70,14 +70,24 @@ export function useData() {
       }
       return user;
     });
-    updateData(updatedUserInfoList);
+    //업데이트된 유저정보를 db에 저장, 부모,자식쌍 리스트를 db에 저장
+    updateData(updatedUserInfoList, [
+      ...todosList,
+      {
+        childId: updatedUserInfo.email,
+        parentId: updatedUserInfo.parent,
+        todos: [],
+      },
+    ]);
   }
 
   function updateData(users?: IUserInfo[], todoss?: ITodos[]) {
     if (users) {
+      setUserList(users);
       localStorage.setItem(USERS_KEY, JSON.stringify(users));
     }
     if (todoss) {
+      setTodosList(todoss);
       localStorage.setItem(TODOSLIST_KEY, JSON.stringify(todoss));
     }
   }
@@ -92,7 +102,7 @@ export function useData() {
     signIn,
     loadData,
     userList,
-    todosList,
     updateData,
+    todosList,
   };
 }

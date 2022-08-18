@@ -1,0 +1,24 @@
+.todo-item-box {
+  border: 0.5px solid $color-light-gray;
+  border-radius: 6px;
+  padding: 8px 18px;
+  margin: 11px 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.todo-state {
+  background: #ffffff;
+  border: 1px solid $color-purple;
+  border-radius: 8px;
+  padding: 4px 4px;
+  p {
+    color: $color-purple;
+  }
+}
+
+.in-progress {
+  width: 20px;
+  height: 20px;
+}

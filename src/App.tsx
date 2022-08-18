@@ -11,6 +11,8 @@ import "./styles/App.scss";
 import { parseJwt } from "./utils";
 import "react-toastify/dist/ReactToastify.css";
 import { AddParent } from "./components/AddParent";
+import { ChildTodo } from "./components/ChildTodo";
+import { MineTodo } from "./components/MineTodo";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -19,7 +21,7 @@ function App() {
   const [childTodos, setChildTodos] = useState<ITodo[]>([]);
   const [credential, setCredential] = useState<string>();
   const [parentEmail, setParentEmail] = useState<string | undefined>();
-  const { signIn, loadData, userList, todosList, updateData, user, addParent } =
+  const { signIn, userList, todosList, user, updateData, addParent } =
     useData();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,6 +35,11 @@ function App() {
     }
     if (parentEmail == "") {
       toast("부모 이메일을 입력하세요!");
+      return;
+    }
+    if (parentEmail === user.email) {
+      toast("본인은 부모로 등록할 수 없습니다.");
+      setParentEmail("");
       return;
     }
     if (parentEmail) {
@@ -72,6 +79,21 @@ function App() {
     setChildTodos(todos.todos);
   };
 
+  //부모자식 맺을때 리스트는 생성됨
+  const addTodo = (todo: ITodo) => {
+    setChildTodos((currentChildTodos) => [...currentChildTodos, todo]);
+    //todosList에서 해당 관계 리스트를 찾아 업데이트해준다.
+    console.log(todo);
+    const updatedTodosList = todosList.map((todosObj) => {
+      if (todosObj.parentId === user?.email) {
+        todosObj.todos.push(todo);
+      }
+      return todosObj;
+    });
+    console.log(updatedTodosList);
+    //업데이트된애를 db에 저장한다.
+    updateData(undefined, updatedTodosList);
+  };
   useEffect(() => {
     if (!credential) return;
 
@@ -87,7 +109,7 @@ function App() {
     if (!user) return;
     getMyTodos();
     getChildTodos();
-  }, [user]);
+  }, [user, todosList]);
 
   return (
     <div className="App">
@@ -107,8 +129,10 @@ function App() {
           <p>자식이 없어용!</p>
         </div>
       )}
-      {tabState === "MINE" && <TodoList todos={myTodos} />}
-      {tabState === "CHILD" && <TodoList todos={childTodos} />}
+      {tabState === "MINE" && user?.parent && <MineTodo todos={myTodos} />}
+      {tabState === "CHILD" && user?.child && (
+        <ChildTodo addTodo={addTodo} todos={childTodos} />
+      )}
     </div>
   );
 }
